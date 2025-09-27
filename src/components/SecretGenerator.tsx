@@ -235,23 +235,3 @@ const SecretGenerator: React.FC = () => {
 };
 
 export default SecretGenerator;
-          <div className="bg-gray-800 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm border border-gray-700 dark:border-gray-600 transition-colors duration-200">
-            <div className="text-gray-400 text-xs mb-1">Better Auth CLI (Alternative):</div>
-            <code className="text-green-400">npx @better-auth/cli secret</code>
-          </div>
-          <div className="bg-gray-800 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm border border-gray-700 dark:border-gray-600 transition-colors duration-200">
-            <div className="text-gray-400 text-xs mb-1">This Tool:</div>
-            <code className="text-blue-400">Web Crypto API → Hex</code>
-            <div className="text-gray-400 text-xs mt-1">→ Generates hexadecimal format (64 characters)</div>
-          </div>
-        </div>
-        <p className="text-gray-400 dark:text-gray-300 text-sm mt-4 bg-blue-900/20 p-3 rounded border border-blue-800">
-          <strong>Important Note:</strong> All methods generate secrets with the same 256-bit entropy and identical security.
-          Better Auth supports secrets in any format, whether Base64 or hexadecimal.
-        </p>
-      </div>
-    </section>
-  );
-};
-
-export default SecretGenerator;
