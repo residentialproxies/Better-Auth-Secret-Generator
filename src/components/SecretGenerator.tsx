@@ -8,7 +8,7 @@ interface SecretLength {
 }
 
 const SECRET_LENGTHS: SecretLength[] = [
-  { label: 'Standard (32 bytes)', bytes: 32, description: 'Recommended for most applications' },
+  { label: 'Standard (32 bytes)', bytes: 32, description: 'Official Better Auth recommendation (openssl rand -base64 32)' },
   { label: 'Enhanced (48 bytes)', bytes: 48, description: 'Higher security for sensitive data' },
   { label: 'Maximum (64 bytes)', bytes: 64, description: 'Maximum security for enterprise use' },
 ];
