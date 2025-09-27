@@ -193,17 +193,48 @@ const SecretGenerator: React.FC = () => {
       <div className="bg-gray-900 dark:bg-gray-800 rounded-2xl p-6 text-white border border-gray-700 dark:border-gray-600 transition-colors duration-200">
         <h3 className="text-xl font-bold mb-4 flex items-center space-x-2">
           <Key className="h-5 w-5" />
-          <span>Official Command Comparison</span>
+          <span>Official Better Auth Command</span>
         </h3>
         <p className="text-gray-300 mb-4">
-          You can also use these official methods to generate secrets:
+          Better Auth officially recommends using OpenSSL to generate secrets:
         </p>
         <div className="space-y-3">
           <div className="bg-gray-800 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm border border-gray-700 dark:border-gray-600 transition-colors duration-200">
-            <div className="text-gray-400 text-xs mb-1">OpenSSL (Official Recommendation):</div>
+            <div className="text-green-400 text-xs mb-1 font-semibold">✓ Official Better Auth Recommendation:</div>
             <code className="text-green-400">openssl rand -base64 32</code>
             <div className="text-gray-400 text-xs mt-1">→ Generates Base64 format (~44 characters)</div>
           </div>
+          <div className="bg-blue-900/20 border border-blue-700 rounded-lg p-4">
+            <div className="text-blue-300 text-sm font-medium mb-2">Alternative Methods:</div>
+            <div className="space-y-2">
+              <div>
+                <code className="text-blue-400 text-sm">npx @better-auth/cli secret</code>
+                <div className="text-gray-400 text-xs">Better Auth CLI tool</div>
+              </div>
+              <div>
+                <code className="text-purple-400 text-sm">This Web Tool</code>
+                <div className="text-gray-400 text-xs">Browser-based generation (hexadecimal format)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="bg-amber-900/20 border border-amber-700 rounded-lg p-4 mt-4">
+          <div className="flex items-start space-x-2">
+            <Shield className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+            <div className="text-sm">
+              <p className="text-amber-300 font-medium mb-1">Security Note</p>
+              <p className="text-amber-200">
+                All methods generate equally secure 256-bit secrets. Choose based on your development environment and preferences.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default SecretGenerator;
           <div className="bg-gray-800 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm border border-gray-700 dark:border-gray-600 transition-colors duration-200">
             <div className="text-gray-400 text-xs mb-1">Better Auth CLI (Alternative):</div>
             <code className="text-green-400">npx @better-auth/cli secret</code>
