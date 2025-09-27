@@ -85,19 +85,19 @@ const SecretGenerator: React.FC = () => {
       </div>
 
       {/* Generator Card */}
-      <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-12">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 p-6 mb-12 transition-colors duration-200">
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Controls */}
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-semibold text-gray-900 mb-3">
+              <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
                 Secret Length
               </label>
               <div className="space-y-2">
                 {SECRET_LENGTHS.map((length) => (
                   <label
                     key={length.bytes}
-                    className="flex items-center space-x-3 cursor-pointer group p-2 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="flex items-center space-x-3 cursor-pointer group p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                   >
                     <input
                       type="radio"
@@ -108,10 +108,10 @@ const SecretGenerator: React.FC = () => {
                     />
                     <div className="flex-1">
                       <div className="flex items-center space-x-2">
-                        <span className="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
+                        <span className="text-sm font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                           {length.label}
                         </span>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
                           {length.description}
                         </span>
                       </div>
@@ -134,7 +134,7 @@ const SecretGenerator: React.FC = () => {
           {/* Generated Secret */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="block text-sm font-semibold text-gray-900">
+              <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100">
                 Generated Secret
               </label>
               <div className="flex items-center text-xs text-gray-500">
@@ -144,9 +144,9 @@ const SecretGenerator: React.FC = () => {
             </div>
             
             <div className="relative">
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 pr-12 font-mono text-sm break-all min-h-[80px] flex items-center">
+              <div className="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-3 pr-12 font-mono text-sm break-all min-h-[80px] flex items-center transition-colors duration-200">
                 {secret ? (
-                  <span className="text-gray-900 leading-relaxed">{secret}</span>
+                  <span className="text-gray-900 dark:text-gray-100 leading-relaxed">{secret}</span>
                 ) : (
                   <span className="text-gray-400">Generating secret...</span>
                 )}
@@ -155,7 +155,7 @@ const SecretGenerator: React.FC = () => {
               {secret && (
                 <button
                   onClick={copyToClipboard}
-                  className="absolute top-3 right-3 p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  className="absolute top-3 right-3 p-1.5 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                   title={copied ? 'Copied!' : 'Copy to clipboard'}
                 >
                   {copied ? (
@@ -174,12 +174,12 @@ const SecretGenerator: React.FC = () => {
               </div>
             )}
 
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3 transition-colors duration-200">
               <div className="flex items-start space-x-2">
-                <Shield className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
+                <Shield className="h-5 w-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
                 <div className="text-sm">
-                  <p className="font-medium text-amber-800 mb-1">Security Note</p>
-                  <p className="text-amber-700">
+                  <p className="font-medium text-amber-800 dark:text-amber-300 mb-1">Security Note</p>
+                  <p className="text-amber-700 dark:text-amber-400">
                     Store this secret securely in your environment variables. Never commit it to version control or expose it in client-side code.
                   </p>
                 </div>
@@ -190,7 +190,7 @@ const SecretGenerator: React.FC = () => {
       </div>
 
       {/* CLI Reference */}
-      <div className="bg-gray-900 rounded-2xl p-6 text-white">
+      <div className="bg-gray-900 dark:bg-gray-800 rounded-2xl p-6 text-white border border-gray-700 dark:border-gray-600 transition-colors duration-200">
         <h3 className="text-xl font-bold mb-4 flex items-center space-x-2">
           <Key className="h-5 w-5" />
           <span>CLI Alternative</span>
@@ -198,10 +198,10 @@ const SecretGenerator: React.FC = () => {
         <p className="text-gray-300 mb-4">
           You can also generate secrets using the Better Auth CLI:
         </p>
-        <div className="bg-gray-800 rounded-lg p-4 font-mono text-sm">
+        <div className="bg-gray-800 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm border border-gray-700 dark:border-gray-600 transition-colors duration-200">
           <code className="text-green-400">npx @better-auth/cli secret</code>
         </div>
-        <p className="text-gray-400 text-sm mt-3">
+        <p className="text-gray-400 dark:text-gray-300 text-sm mt-3">
           This command automatically adds the secret to your .env.local file
         </p>
       </div>
