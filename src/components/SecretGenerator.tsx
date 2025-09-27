@@ -193,30 +193,30 @@ const SecretGenerator: React.FC = () => {
       <div className="bg-gray-900 dark:bg-gray-800 rounded-2xl p-6 text-white border border-gray-700 dark:border-gray-600 transition-colors duration-200">
         <h3 className="text-xl font-bold mb-4 flex items-center space-x-2">
           <Key className="h-5 w-5" />
-          <span>官方命令对比</span>
+          <span>Official Command Comparison</span>
         </h3>
         <p className="text-gray-300 mb-4">
-          你也可以使用这些官方方法生成密钥：
+          You can also use these official methods to generate secrets:
         </p>
         <div className="space-y-3">
           <div className="bg-gray-800 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm border border-gray-700 dark:border-gray-600 transition-colors duration-200">
-            <div className="text-gray-400 text-xs mb-1">Better Auth CLI（推荐）:</div>
+            <div className="text-gray-400 text-xs mb-1">OpenSSL (Official Recommendation):</div>
+            <code className="text-green-400">openssl rand -base64 32</code>
+            <div className="text-gray-400 text-xs mt-1">→ Generates Base64 format (~44 characters)</div>
+          </div>
+          <div className="bg-gray-800 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm border border-gray-700 dark:border-gray-600 transition-colors duration-200">
+            <div className="text-gray-400 text-xs mb-1">Better Auth CLI (Alternative):</div>
             <code className="text-green-400">npx @better-auth/cli secret</code>
           </div>
           <div className="bg-gray-800 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm border border-gray-700 dark:border-gray-600 transition-colors duration-200">
-            <div className="text-gray-400 text-xs mb-1">OpenSSL（官方文档）:</div>
-            <code className="text-green-400">openssl rand -base64 32</code>
-            <div className="text-gray-400 text-xs mt-1">→ 生成 Base64 格式（~44 字符）</div>
-          </div>
-          <div className="bg-gray-800 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm border border-gray-700 dark:border-gray-600 transition-colors duration-200">
-            <div className="text-gray-400 text-xs mb-1">本工具:</div>
+            <div className="text-gray-400 text-xs mb-1">This Tool:</div>
             <code className="text-blue-400">Web Crypto API → Hex</code>
-            <div className="text-gray-400 text-xs mt-1">→ 生成十六进制格式（64 字符）</div>
+            <div className="text-gray-400 text-xs mt-1">→ Generates hexadecimal format (64 characters)</div>
           </div>
         </div>
         <p className="text-gray-400 dark:text-gray-300 text-sm mt-4 bg-blue-900/20 p-3 rounded border border-blue-800">
-          <strong>重要说明：</strong>所有方法生成的密钥都有相同的 256 位熵值，安全性完全一样。
-          Better Auth 支持任何格式的密钥，无论是 Base64 还是十六进制。
+          <strong>Important Note:</strong> All methods generate secrets with the same 256-bit entropy and identical security.
+          Better Auth supports secrets in any format, whether Base64 or hexadecimal.
         </p>
       </div>
     </section>
