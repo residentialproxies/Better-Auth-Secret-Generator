@@ -56,12 +56,17 @@ const SEOContent: React.FC = () => {
         <div className="space-y-6">
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              What's the difference between this and the official OpenSSL command?
+              这个工具和官方 OpenSSL 命令有什么区别？
             </h3>
             <p className="text-gray-600 leading-relaxed">
-              Better Auth officially recommends using <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono">openssl rand -base64 32</code> 
-              to generate secrets. Our web-based generator produces the same cryptographic quality using the Web Crypto API, 
-              but converts to hexadecimal format for consistency with Better Auth's internal expectations.
+              Better Auth 官方推荐使用 <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono">openssl rand -base64 32</code> 
+              生成密钥。<strong>重要区别：</strong>
+              <br/><br/>
+              • <strong>OpenSSL 命令</strong>：生成 32 个随机字节，然后转换为 Base64 格式（约 44 个字符）
+              <br/>
+              • <strong>我们的工具</strong>：生成 32 个随机字节，然后转换为十六进制格式（64 个字符）
+              <br/><br/>
+              两种方法的<strong>熵值相同</strong>（256 位），安全性完全一样，只是编码格式不同。Better Auth 可以接受任何格式的密钥。
             </p>
           </div>
 
