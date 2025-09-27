@@ -93,30 +93,37 @@ const SecretGenerator: React.FC = () => {
               <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
                 Secret Length
               </label>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {SECRET_LENGTHS.map((length) => (
-                  <label
+                  <div
                     key={length.bytes}
-                    className="flex items-center space-x-3 cursor-pointer group p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    className={`relative border-2 rounded-xl p-4 cursor-pointer transition-all duration-200 ${
+                      selectedLength.bytes === length.bytes
+                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-md'
+                        : 'border-gray-200 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700'
+                    }`}
+                    onClick={() => setSelectedLength(length)}
                   >
-                    <input
-                      type="radio"
-                      name="secretLength"
-                      checked={selectedLength.bytes === length.bytes}
-                      onChange={() => setSelectedLength(length)}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
-                    />
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-sm font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    <div className="flex items-start space-x-3">
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5 ${
+                        selectedLength.bytes === length.bytes
+                          ? 'border-blue-500 bg-blue-500'
+                          : 'border-gray-300 dark:border-gray-500'
+                      }`}>
+                        {selectedLength.bytes === length.bytes && (
+                          <div className="w-2 h-2 bg-white rounded-full"></div>
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-semibold text-gray-900 dark:text-gray-100 mb-1">
                           {length.label}
-                        </span>
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                        </div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                           {length.description}
-                        </span>
+                        </div>
                       </div>
                     </div>
-                  </label>
+                  </div>
                 ))}
               </div>
             </div>
@@ -124,7 +131,7 @@ const SecretGenerator: React.FC = () => {
             <button
               onClick={generateSecret}
               disabled={isGenerating}
-              className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:from-green-700 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center space-x-2"
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             >
               <RefreshCw className={`h-5 w-5 ${isGenerating ? 'animate-spin' : ''}`} />
               <span>{isGenerating ? 'Generating...' : 'Generate New Secret'}</span>
@@ -137,25 +144,25 @@ const SecretGenerator: React.FC = () => {
               <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100">
                 Generated Secret
               </label>
-              <div className="flex items-center text-xs text-gray-500">
+              <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
                 <Key className="h-3 w-3 mr-1" />
                 <span>{selectedLength.bytes * 2} characters</span>
               </div>
             </div>
             
             <div className="relative">
-              <div className="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-3 pr-12 font-mono text-sm break-all min-h-[80px] flex items-center transition-colors duration-200">
+              <div className="bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl p-4 pr-12 font-mono text-sm break-all min-h-[100px] flex items-center transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-400">
                 {secret ? (
-                  <span className="text-gray-900 dark:text-gray-100 leading-relaxed">{secret}</span>
+                  <span className="text-gray-900 dark:text-gray-100 leading-relaxed select-all">{secret}</span>
                 ) : (
-                  <span className="text-gray-400">Generating secret...</span>
+                  <span className="text-gray-400 dark:text-gray-500">Generating secret...</span>
                 )}
               </div>
               
               {secret && (
                 <button
                   onClick={copyToClipboard}
-                  className="absolute top-3 right-3 p-1.5 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  className="absolute top-4 right-4 p-2 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-sm hover:shadow-md"
                   title={copied ? 'Copied!' : 'Copy to clipboard'}
                 >
                   {copied ? (
@@ -168,7 +175,7 @@ const SecretGenerator: React.FC = () => {
             </div>
 
             {copied && (
-              <div className="flex items-center space-x-2 text-sm text-green-600 bg-green-50 px-3 py-2 rounded-md">
+              <div className="flex items-center space-x-2 text-sm text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 px-4 py-3 rounded-xl animate-pulse">
                 <Check className="h-4 w-4" />
                 <span>Secret copied to clipboard!</span>
               </div>
