@@ -56,11 +56,33 @@ const SEOContent: React.FC = () => {
         <div className="space-y-6">
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              What's the difference between this and the official OpenSSL command?
+            </h3>
+            <p className="text-gray-600 leading-relaxed">
+              Better Auth officially recommends using <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono">openssl rand -base64 32</code> 
+              to generate secrets. Our web-based generator produces the same cryptographic quality using the Web Crypto API, 
+              but converts to hexadecimal format for consistency with Better Auth's internal expectations.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
               What is Better Auth?
             </h3>
             <p className="text-gray-600 leading-relaxed">
               Better Auth is a universal authentication and authorization framework for TypeScript applications. 
               It provides secure, flexible authentication solutions with built-in security features and easy integration.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Does Better Auth support different secret lengths?
+            </h3>
+            <p className="text-gray-600 leading-relaxed">
+              Better Auth primarily uses 32-byte (256-bit) secrets as recommended in their documentation. While the framework 
+              can technically handle longer secrets, the standard 32-byte length provides excellent security for most applications. 
+              The enhanced and maximum options are provided for users who prefer additional entropy, though they exceed typical requirements.
             </p>
           </div>
 
@@ -76,7 +98,7 @@ const SEOContent: React.FC = () => {
 
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              What secret length should I choose?
+              Which secret length should I choose?
             </h3>
             <p className="text-gray-600 leading-relaxed">
               For most applications, the standard 32-byte (256-bit) secret provides excellent security. 
@@ -97,12 +119,12 @@ const SEOContent: React.FC = () => {
 
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Is this tool better than the CLI?
+              Should I use this tool or the OpenSSL command?
             </h3>
             <p className="text-gray-600 leading-relaxed">
-              Both tools generate equally secure secrets. This web tool offers convenience and additional 
-              educational content, while the CLI automatically adds secrets to your environment files. 
-              Choose based on your workflow preferences.
+              Both methods generate equally secure secrets. The official <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono">openssl rand -base64 32</code> 
+              command is perfect for command-line workflows, while this web tool offers convenience, visual feedback, 
+              and educational content. Choose based on your preference and development environment.
             </p>
           </div>
         </div>

@@ -193,16 +193,23 @@ const SecretGenerator: React.FC = () => {
       <div className="bg-gray-900 dark:bg-gray-800 rounded-2xl p-6 text-white border border-gray-700 dark:border-gray-600 transition-colors duration-200">
         <h3 className="text-xl font-bold mb-4 flex items-center space-x-2">
           <Key className="h-5 w-5" />
-          <span>CLI Alternative</span>
+          <span>Official Commands</span>
         </h3>
         <p className="text-gray-300 mb-4">
-          You can also generate secrets using the Better Auth CLI:
+          You can also generate secrets using these official methods:
         </p>
-        <div className="bg-gray-800 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm border border-gray-700 dark:border-gray-600 transition-colors duration-200">
-          <code className="text-green-400">npx @better-auth/cli secret</code>
+        <div className="space-y-3">
+          <div className="bg-gray-800 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm border border-gray-700 dark:border-gray-600 transition-colors duration-200">
+            <div className="text-gray-400 text-xs mb-1">Better Auth CLI:</div>
+            <code className="text-green-400">npx @better-auth/cli secret</code>
+          </div>
+          <div className="bg-gray-800 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm border border-gray-700 dark:border-gray-600 transition-colors duration-200">
+            <div className="text-gray-400 text-xs mb-1">OpenSSL (Official):</div>
+            <code className="text-green-400">openssl rand -base64 32</code>
+          </div>
         </div>
         <p className="text-gray-400 dark:text-gray-300 text-sm mt-3">
-          This command automatically adds the secret to your .env.local file
+          The CLI command automatically adds secrets to your .env.local file
         </p>
       </div>
     </section>
