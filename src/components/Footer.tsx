@@ -24,6 +24,17 @@ const Footer: React.FC = () => {
             <ul className="space-y-2 text-gray-400">
               <li>
                 <a 
+                  href="https://github.com/residentialproxies/Better-Auth-Secret-Generator" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-blue-400 transition-colors duration-200 flex items-center space-x-2"
+                >
+                  <Github className="h-4 w-4" />
+                  <span>GitHub Repository</span>
+                </a>
+              </li>
+              <li>
+                <a 
                   href="https://www.better-auth.com/" 
                   target="_blank" 
                   rel="noopener noreferrer"
