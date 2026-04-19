@@ -35,12 +35,6 @@ const Header: React.FC = () => {
               <a href="#guide" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
                 Guide
               </a>
-              <a
-                href="#api"
-                className="px-4 py-1.5 rounded-full bg-blue-600 dark:bg-blue-500 text-white text-sm font-medium hover:bg-blue-700 dark:hover:bg-blue-400 transition-colors duration-200"
-              >
-                API
-              </a>
               <a href="#faq" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
                 FAQ
               </a>
@@ -52,6 +46,12 @@ const Header: React.FC = () => {
             >
               {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </button>
+            <a
+              href="#api"
+              className="px-4 py-1.5 rounded-full bg-blue-600 dark:bg-blue-500 text-white text-sm font-medium hover:bg-blue-700 dark:hover:bg-blue-400 transition-colors duration-200"
+            >
+              API
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -83,12 +83,19 @@ const Header: React.FC = () => {
               >
                 Generator
               </a>
-              <a 
-                href="#guide" 
+              <a
+                href="#guide"
                 className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Guide
+              </a>
+              <a
+                href="#faq"
+                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                FAQ
               </a>
               <a
                 href="#api"
@@ -96,13 +103,6 @@ const Header: React.FC = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 API
-              </a>
-              <a 
-                href="#faq" 
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                FAQ
               </a>
             </nav>
           </div>
