@@ -18,7 +18,7 @@ const SecretGenerator: React.FC = () => {
   const [selectedLength, setSelectedLength] = useState<SecretLength>(SECRET_LENGTHS[0]);
   const [copied, setCopied] = useState<boolean>(false);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
-  const [apiUrl, setApiUrl] = useState<string>('');
+  const [apiUrl, setApiUrl] = useState<string>('https://better-auth-secret.com/api');
   const [isFetching, setIsFetching] = useState<boolean>(false);
   const [fetchError, setFetchError] = useState<string>('');
 
@@ -73,11 +73,19 @@ const SecretGenerator: React.FC = () => {
     try {
       const res = await fetch(apiUrl.trim());
       if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-      const data = await res.json();
-      if (typeof data.secret === 'string' && data.secret) {
-        setSecret(data.secret);
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        const data = await res.json();
+        const value = typeof data === 'string' ? data : data.secret;
+        if (typeof value === 'string' && value.trim()) {
+          setSecret(value.trim());
+        } else {
+          throw new Error('Response JSON does not contain a "secret" field');
+        }
       } else {
-        throw new Error('Response does not contain a "secret" field');
+        const text = (await res.text()).trim();
+        if (!text) throw new Error('Empty response from URL');
+        setSecret(text);
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Failed to fetch from URL';

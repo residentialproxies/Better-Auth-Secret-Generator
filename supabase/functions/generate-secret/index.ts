@@ -1,128 +1,82 @@
 interface SecretRequest {
   length?: number;
   format?: 'hex' | 'base64';
-}
-
-interface SecretResponse {
-  secret: string;
-  length: number;
-  format: string;
-  timestamp: string;
+  output?: 'text' | 'json';
 }
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey",
 };
+
+function generateSecret(length: number, format: 'hex' | 'base64'): string {
+  const randomBytes = new Uint8Array(length);
+  crypto.getRandomValues(randomBytes);
+  if (format === 'base64') {
+    return btoa(String.fromCharCode(...randomBytes));
+  }
+  return Array.from(randomBytes, b => b.toString(16).padStart(2, '0')).join('');
+}
 
 Deno.serve(async (req: Request) => {
   try {
-    // Handle CORS preflight requests
     if (req.method === "OPTIONS") {
-      return new Response(null, {
-        status: 200,
-        headers: corsHeaders,
+      return new Response(null, { status: 200, headers: corsHeaders });
+    }
+
+    if (req.method !== "GET" && req.method !== "POST") {
+      return new Response("Method not allowed", {
+        status: 405,
+        headers: { ...corsHeaders, "Content-Type": "text/plain" },
       });
     }
 
-    // Only allow GET and POST methods
-    if (req.method !== "GET" && req.method !== "POST") {
-      return new Response(
-        JSON.stringify({ error: "Method not allowed" }),
-        {
-          status: 405,
-          headers: {
-            "Content-Type": "application/json",
-            ...corsHeaders,
-          },
-        }
-      );
-    }
+    let length = 32;
+    let format: 'hex' | 'base64' = 'hex';
+    let output: 'text' | 'json' = 'text';
 
-    let length = 32; // Default to 32 bytes (Better Auth standard)
-    let format: 'hex' | 'base64' = 'hex'; // Default to hex format
-
-    // Parse request parameters
     if (req.method === "POST") {
       try {
         const body: SecretRequest = await req.json();
-        if (body.length) {
-          length = Math.min(Math.max(body.length, 16), 128); // Clamp between 16 and 128 bytes
-        }
-        if (body.format && (body.format === 'hex' || body.format === 'base64')) {
-          format = body.format;
-        }
+        if (body.length) length = Math.min(Math.max(body.length, 16), 128);
+        if (body.format === 'hex' || body.format === 'base64') format = body.format;
+        if (body.output === 'json') output = 'json';
       } catch {
-        // If JSON parsing fails, use defaults
+        // use defaults
       }
-    } else if (req.method === "GET") {
-      const url = new URL(req.url);
-      const lengthParam = url.searchParams.get('length');
-      const formatParam = url.searchParams.get('format');
-      
-      if (lengthParam) {
-        const parsedLength = parseInt(lengthParam, 10);
-        if (!isNaN(parsedLength)) {
-          length = Math.min(Math.max(parsedLength, 16), 128);
-        }
-      }
-      
-      if (formatParam && (formatParam === 'hex' || formatParam === 'base64')) {
-        format = formatParam;
-      }
-    }
-
-    // Generate cryptographically secure random bytes
-    const randomBytes = new Uint8Array(length);
-    crypto.getRandomValues(randomBytes);
-
-    // Convert to requested format
-    let secret: string;
-    if (format === 'base64') {
-      // Convert to base64
-      const binaryString = String.fromCharCode(...randomBytes);
-      secret = btoa(binaryString);
     } else {
-      // Convert to hex (default)
-      secret = Array.from(randomBytes, byte => 
-        byte.toString(16).padStart(2, '0')
-      ).join('');
+      const url = new URL(req.url);
+      const lp = url.searchParams.get('length');
+      const fp = url.searchParams.get('format');
+      const op = url.searchParams.get('output');
+      if (lp) {
+        const n = parseInt(lp, 10);
+        if (!isNaN(n)) length = Math.min(Math.max(n, 16), 128);
+      }
+      if (fp === 'hex' || fp === 'base64') format = fp;
+      if (op === 'json') output = 'json';
     }
 
-    const response: SecretResponse = {
-      secret,
-      length,
-      format,
-      timestamp: new Date().toISOString(),
-    };
+    const secret = generateSecret(length, format);
 
-    return new Response(
-      JSON.stringify(response),
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-          ...corsHeaders,
-        },
-      }
-    );
+    if (output === 'json') {
+      return new Response(
+        JSON.stringify({ secret, length, format, timestamp: new Date().toISOString() }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    return new Response(secret, {
+      status: 200,
+      headers: { ...corsHeaders, "Content-Type": "text/plain; charset=utf-8" },
+    });
 
   } catch (error) {
     console.error('Error generating secret:', error);
-    
-    return new Response(
-      JSON.stringify({ 
-        error: "Internal server error",
-        message: "Failed to generate secret"
-      }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-          ...corsHeaders,
-        },
-      }
-    );
+    return new Response("Internal server error", {
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "text/plain" },
+    });
   }
 });
