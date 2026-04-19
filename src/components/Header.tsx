@@ -35,7 +35,10 @@ const Header: React.FC = () => {
               <a href="#guide" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
                 Guide
               </a>
-              <a href="#api" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
+              <a
+                href="#api"
+                className="px-4 py-1.5 rounded-full bg-blue-600 dark:bg-blue-500 text-white text-sm font-medium hover:bg-blue-700 dark:hover:bg-blue-400 transition-colors duration-200"
+              >
                 API
               </a>
               <a href="#faq" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
@@ -87,9 +90,9 @@ const Header: React.FC = () => {
               >
                 Guide
               </a>
-              <a 
-                href="#api" 
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 py-2"
+              <a
+                href="#api"
+                className="inline-block px-4 py-1.5 rounded-full bg-blue-600 dark:bg-blue-500 text-white text-sm font-medium hover:bg-blue-700 dark:hover:bg-blue-400 transition-colors duration-200"
                 onClick={() => setIsMenuOpen(false)}
               >
                 API
