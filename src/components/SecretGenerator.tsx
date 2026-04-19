@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Copy, RefreshCw, Check, Key, Zap, Shield, Globe, ArrowRight, AlertCircle } from 'lucide-react';
+import { Copy, RefreshCw, Check, Key, Zap, Shield } from 'lucide-react';
 
 interface SecretLength {
   label: string;
@@ -18,9 +18,6 @@ const SecretGenerator: React.FC = () => {
   const [selectedLength, setSelectedLength] = useState<SecretLength>(SECRET_LENGTHS[0]);
   const [copied, setCopied] = useState<boolean>(false);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
-  const [apiUrl, setApiUrl] = useState<string>('https://better-auth-secret.com/api');
-  const [isFetching, setIsFetching] = useState<boolean>(false);
-  const [fetchError, setFetchError] = useState<string>('');
 
   const generateSecret = useCallback(async () => {
     setIsGenerating(true);
@@ -65,35 +62,6 @@ const SecretGenerator: React.FC = () => {
       setTimeout(() => setCopied(false), 2000);
     }
   }, [secret]);
-
-  const fetchFromUrl = useCallback(async () => {
-    if (!apiUrl.trim()) return;
-    setIsFetching(true);
-    setFetchError('');
-    try {
-      const res = await fetch(apiUrl.trim());
-      if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-      const contentType = res.headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
-        const data = await res.json();
-        const value = typeof data === 'string' ? data : data.secret;
-        if (typeof value === 'string' && value.trim()) {
-          setSecret(value.trim());
-        } else {
-          throw new Error('Response JSON does not contain a "secret" field');
-        }
-      } else {
-        const text = (await res.text()).trim();
-        if (!text) throw new Error('Empty response from URL');
-        setSecret(text);
-      }
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Failed to fetch from URL';
-      setFetchError(message);
-    } finally {
-      setIsFetching(false);
-    }
-  }, [apiUrl]);
 
   React.useEffect(() => {
     generateSecret();
@@ -169,43 +137,6 @@ const SecretGenerator: React.FC = () => {
               <span>{isGenerating ? 'Generating...' : 'Generate New Secret'}</span>
             </button>
 
-            <div className="pt-2">
-              <div className="flex items-center gap-2 mb-2">
-                <Globe className="h-4 w-4 text-gray-500 dark:text-gray-400" />
-                <label className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                  Fetch from API URL
-                </label>
-              </div>
-              <div className="flex gap-2">
-                <input
-                  type="url"
-                  value={apiUrl}
-                  onChange={e => { setApiUrl(e.target.value); setFetchError(''); }}
-                  onKeyDown={e => e.key === 'Enter' && fetchFromUrl()}
-                  placeholder="https://better-auth-secret.com/api"
-                  className="flex-1 bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2.5 text-sm font-mono text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 transition-colors duration-200"
-                />
-                <button
-                  onClick={fetchFromUrl}
-                  disabled={isFetching || !apiUrl.trim()}
-                  className="bg-gray-900 dark:bg-gray-600 text-white px-4 py-2.5 rounded-xl font-semibold hover:bg-gray-700 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 flex items-center gap-1.5 shadow"
-                  title="Fetch secret from URL"
-                >
-                  {isFetching ? (
-                    <RefreshCw className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <ArrowRight className="h-4 w-4" />
-                  )}
-                  <span className="text-sm">{isFetching ? 'Fetching...' : 'Fetch'}</span>
-                </button>
-              </div>
-              {fetchError && (
-                <div className="flex items-start gap-2 mt-2 text-xs text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 px-3 py-2 rounded-lg">
-                  <AlertCircle className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" />
-                  <span>{fetchError}</span>
-                </div>
-              )}
-            </div>
           </div>
 
           {/* Generated Secret */}
