@@ -39,6 +39,12 @@ const Header: React.FC = () => {
                 FAQ
               </a>
             </nav>
+            <a
+              href="#api"
+              className="px-4 py-1.5 rounded-full bg-blue-600 dark:bg-blue-500 text-white text-sm font-medium hover:bg-blue-700 dark:hover:bg-blue-400 transition-colors duration-200"
+            >
+              API
+            </a>
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
@@ -46,12 +52,6 @@ const Header: React.FC = () => {
             >
               {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </button>
-            <a
-              href="#api"
-              className="px-4 py-1.5 rounded-full bg-blue-600 dark:bg-blue-500 text-white text-sm font-medium hover:bg-blue-700 dark:hover:bg-blue-400 transition-colors duration-200"
-            >
-              API
-            </a>
           </div>
 
           {/* Mobile Menu Button */}
