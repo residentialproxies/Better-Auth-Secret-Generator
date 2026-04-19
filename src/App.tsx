@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './components/Header';
 import SecretGenerator from './components/SecretGenerator';
 import InfoSection from './components/InfoSection';
+import ApiDocumentation from './components/ApiDocumentation';
 import Footer from './components/Footer';
 import SEOContent from './components/SEOContent';
 
@@ -13,6 +14,9 @@ function App() {
         <SecretGenerator />
         <div id="guide">
           <InfoSection />
+        </div>
+        <div id="api">
+          <ApiDocumentation />
         </div>
         <div id="faq">
           <SEOContent />

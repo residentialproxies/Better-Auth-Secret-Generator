@@ -35,6 +35,9 @@ const Header: React.FC = () => {
               <a href="#guide" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
                 Guide
               </a>
+              <a href="#api" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
+                API
+              </a>
               <a href="#faq" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
                 FAQ
               </a>
@@ -83,6 +86,13 @@ const Header: React.FC = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Guide
+              </a>
+              <a 
+                href="#api" 
+                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                API
               </a>
               <a 
                 href="#faq" 
